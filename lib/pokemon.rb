@@ -22,22 +22,15 @@ class Pokemon
     result = db.execute(sql, id)[0]
     name = result[1]
     type = result[2]
-    new_ob = {name: name, id: id, type: type, hp: 60, db: db}
+    hp = result[3]
+    new_ob = {name: name, id: id, type: type, hp: hp, db: db}
     p = Pokemon.new(new_ob)
     # binding.pry
   end
 
   def alter_hp(hp, db)
-    self.hp = hp
-    update
-    s = self
-    # binding.pry
-  end
-
-  def update
-    sql = "UPDATE pokemon SET hp = ?
-    WHERE id = ?"
-    db.execute(sql, self.id, self.hp)
+    sql = "UPDATE pokemon SET hp = ? WHERE id = ?"
+    db.execute(sql, hp, self.id)
     # binding.pry
   end
 
